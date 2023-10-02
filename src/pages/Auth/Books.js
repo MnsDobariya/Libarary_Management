@@ -5,21 +5,22 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft, faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 
 
 
-const rows = [
-    { id: 1, description: 'Snow', name: 'Jon', price: 35, category: 'c', Image: 'Image' },
-    { id: 2, description: 'Lannister', name: 'Cersei', price: 42, category: 'c++', Image: 'Image' },
-    { id: 3, description: 'Lannister', name: 'Jaime', price: 45, category: 'java', Image: 'Image' },
-    { id: 4, description: 'Stark', name: 'Arya', price: 16, category: 'asp.net', Image: 'Image' },
-    { id: 5, description: 'Targaryen', name: 'Daenerys', price: null, category: 'react', Image: 'Image' },
-    { id: 6, description: 'Melisandre', name: null, price: 150, category: 'c', Image: 'Image' },
-    { id: 7, description: 'Clifford', name: 'Ferrara', price: 44, category: 'c++', Image: 'Image' },
-    { id: 8, description: 'Frances', name: 'Rossini', price: 36, category: 'java', Image: 'Image' },
-    { id: 9, description: 'Roxie', name: 'Harvey', price: 65, category: 'asp.net', Image: 'Image' },
-];
+// const rows = [
+//     { id: 1, description: 'Snow', name: 'Jon', price: 35, category: 'c', Image: 'Image' },
+//     { id: 2, description: 'Lannister', name: 'Cersei', price: 42, category: 'c++', Image: 'Image' },
+//     { id: 3, description: 'Lannister', name: 'Jaime', price: 45, category: 'java', Image: 'Image' },
+//     { id: 4, description: 'Stark', name: 'Arya', price: 16, category: 'asp.net', Image: 'Image' },
+//     { id: 5, description: 'Targaryen', name: 'Daenerys', price: null, category: 'react', Image: 'Image' },
+//     { id: 6, description: 'Melisandre', name: null, price: 150, category: 'c', Image: 'Image' },
+//     { id: 7, description: 'Clifford', name: 'Ferrara', price: 44, category: 'c++', Image: 'Image' },
+//     { id: 8, description: 'Frances', name: 'Rossini', price: 36, category: 'java', Image: 'Image' },
+//     { id: 9, description: 'Roxie', name: 'Harvey', price: 65, category: 'asp.net', Image: 'Image' },
+// ];
 
 
 
@@ -34,6 +35,20 @@ const categoryDropDown = [
 ];
 
 const Books = () => {
+    const [booksData, setBookData] = useState([])
+    // console.log("books",booksData);
+    const getBookData = () => {
+        axios.get("http://localhost:3001/api/v1/books/get")
+            .then((res) => {
+                // console.log("response",res);
+                setBookData(res?.data)
+            })
+    }
+
+    useEffect(() => {
+        getBookData()
+    }, [])
+
     const [openPopup, setOpenPopUp] = useState(false)
     const [deleteRowId, setDeleteRowId] = useState()
 
@@ -41,11 +56,12 @@ const Books = () => {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'title', headerName: 'Title', width: 150 },
+        { field: 'author', headerName: 'Author', width: 150 },
         { field: 'description', headerName: 'Description', width: 150 },
-        { field: 'name', headerName: 'Name', width: 150 },
-        { field: 'price', headerName: 'price', width: 150 },
+        { field: 'bookImage', headerName: 'BookImage', width: 150 },
         { field: 'category', headerName: 'category', width: 150 },
-        { field: 'Image', headerName: 'Image', width: 150 },
+        { field: 'price', headerName: 'price', width: 150 },
         // action
 
 
@@ -78,7 +94,7 @@ const Books = () => {
 
     return (
         <>
-            <DataGrid rows={rows} columns={columns} pageSize={5}
+            <DataGrid rows={booksData} columns={columns} pageSize={5}
                 components={{
                     Toolbar: () => (
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -102,9 +118,9 @@ const Books = () => {
                 }}
                 className="custom-data-grid"
             />
-            {
+            {/* {
                 console.log("hello", rows.id)
-            }
+            } */}
             {openPopup &&
                 <div>
                     hello
