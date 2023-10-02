@@ -30,7 +30,7 @@
     background-color: var(--navBg);
     height: 50px;
     display: flex;
-    justify-content: start;
+    justify-content: end;
     align-items: center;
     padding: 10px;
   }

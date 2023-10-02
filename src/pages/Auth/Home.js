@@ -1,28 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import image from "../Image/first_activity_image.png";
+import axios from "axios";
 
-const data = [
-    { id: 1, title: "Card 1", description: "Description 1" },
-    { id: 2, title: "Card 2", description: "Description 2" },
-    { id: 3, title: "Card 3", description: "Description 3" },
-    { id: 4, title: "Card 3", description: "Description 3" },
-    { id: 5, title: "Card 3", description: "Description 3" },
-    { id: 6, title: "Card 3", description: "Description 3" },
-    // Add more data as needed
-  ];
 const Home = () => {
+  const [homeData, setHomeData] = useState([]);
+
+  const getBooksData = () => {
+    axios.get("http://localhost:3001/api/v1/books/get")
+      .then((res) => {
+        setHomeData(res?.data)
+      })
+  }
+
+  useEffect(() => {
+    getBooksData()
+
+  }, [])
+
+
   return (
     <div className="">
-      <div style={{ display: 'flex', flexWrap: 'wrap',marginLeft:"20px ",marginTop:"20px" }}>
-        {data.map((item) => (
-          <div className='card' style={{ width: "20rem",margin:"23px" }} key={item.id}>
-            <img className='card-img-top' src={image} alt='Card image cap' />
+      <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: "1.5% ", marginTop: "1.5%" }}>
+        {homeData.map((item) => (
+          <div className='card' style={{ width: "20rem", margin: "1.5%" }} key={item.id}>
+            <img className='card-img-top h-50' src={`http://localhost:3001${item.bookImage}`} alt='Card image cap' />
             <div className='card-body'>
-              <h5 className='card-title'>{item.title}</h5>
-              <p className='card-text'>{item.description}</p>
-              <button type='button' className='btn btn-primary'>
-                Primary
-              </button>
+              <div style={{ display: "flex" }}>
+                <h5>Title:</h5>
+                <p className='card-title'>{item.title}</p>
+              </div>
+              <div style={{ display: "flex" }}>
+                <h5>Author:</h5>
+                <p className='card-title'>{item.author}</p>
+              </div>
+              
+              <div style={{ display: "flex" }}>
+                <h5>Category:</h5>
+                <p className='card-text'>{item.category}</p>
+              </div>
+              <div style={{ display: "flex" }}>
+                <h5>Price:</h5>
+                <p className='card-text'>{item.price}</p>
+              </div>
+              {/* <p className='btn btn-primary'>
+                Submit
+              </p> */}
             </div>
           </div>
         ))}

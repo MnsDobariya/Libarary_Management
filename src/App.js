@@ -10,6 +10,9 @@ import Lgn from './pages/component/Lgn';
 import Home from './pages/Auth/Home';
 import Addbooks from './pages/Auth/Addbooks';
 import AboutUs from './pages/Auth/AboutUs';
+import Contact from './pages/Auth/Contact';
+import Books from './pages/Auth/Books';
+import Profile from './pages/Auth/Profile';
 
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/addbooks" element={<Addbooks />} />
         <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/books" element={<Books />} />
+        <Route path="/profile" element={<Profile />} />
         {/* <Route path="/home" element={<Home />} /> */}
         {/* <Route path="/lgn" element={<Lgn />} /> */}
 

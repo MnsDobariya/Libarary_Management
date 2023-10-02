@@ -59,7 +59,7 @@ const Home = () => {
             password: loginUser.password
         }
 
-        axios.post("https://node-project-oshu.onrender.com/api/v1/auth/login", body)
+        axios.post("http://localhost:3001/api/v1/auth/login", body)
             //response success thay to 
             .then((res) => {
 

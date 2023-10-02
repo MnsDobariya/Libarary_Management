@@ -1,6 +1,146 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import '../css/Addbooks.css';
+import { useLocation } from "react-router-dom";
+
+const categoryDropDown = [
+    { label: "c", value: "c" },
+    { label: "c++", value: "c++" },
+    { label: "java", value: "java" },
+    { label: "asp.net", value: "asp.net" },
+    { label: "react", value: "react" },
+];
+
+
 
 const Addbooks = () => {
+
+    const location = useLocation();
+
+    const [bookFormData, setBookFormData] = useState({
+        title: '',
+        author: '',
+        description: '',
+        bookImage: '',
+        category: '',
+        price: ''
+    })
+
+    useEffect(() => {
+        if (location?.state) {
+            setBookFormData(location?.state)
+        }
+    }, [location])
+
+    const [error, setError] = useState({
+        title: '',
+        author: '',
+        description: '',
+        bookImage: '',
+        category: '',
+        price: ''
+
+    })
+
+    const handleChange = (e) => {
+        setBookFormData({
+            ...bookFormData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+    const handleImageChange = (e) => {
+        setBookFormData({
+            ...bookFormData,
+            bookImage: e.target.files[0]
+        })
+    }
+
+    const Addbooks = () => {
+        const error = {};
+
+        if (!bookFormData.title) {
+            error.title = "please title required";
+        }
+
+        if (!bookFormData.author) {
+            error.author = "please author required";
+        }
+
+        if (!bookFormData.description) {
+            error.description = "please description required";
+        }
+
+        // const nameRegex = /^[a-zA-Z]*$/;
+        // if (!bookFormData.name) {
+        //     error.name = "please name required";
+        // } else if (!nameRegex.test(bookFormData.name)) {
+        //     error.name = "Invalid name"
+        // }
+
+        if (!bookFormData.bookImage) {
+            error.bookImage = "please Image required";
+        }
+
+
+        const priceRegex = /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/;
+        if (!bookFormData.price) {
+            error.price = "please price required";
+        } else if (!priceRegex.test(bookFormData.price)) {
+            error.price = "Invalid price"
+        }
+
+
+        if (error.title || error.author || error.description || error.bookImage || error.price) {
+            setError(error)
+            return;
+        }
+
+        console.log("id", location?.state);
+        const form_data = new FormData();
+        if (location?.state) {
+            form_data.append("id", location?.state?.id)
+        }
+        form_data.append("title", bookFormData?.title)
+        form_data.append("author", bookFormData?.author)
+        form_data.append("description", bookFormData?.description)
+        form_data.append("bookImage", bookFormData?.bookImage)
+        form_data.append("category", bookFormData?.category)
+        form_data.append("price", bookFormData?.price)
+
+        if (location?.state) {
+            axios.post("http://localhost:3001/api/v1/books/get", form_data)
+                .then((res) => {
+                    navigator("/books")
+                })
+        } else {
+            axios.post("http://localhost:3001/api/v1/books/create", form_data)
+                .then((res) => {
+                    if (res.status === 201) {
+                        setBookFormData({
+                            title: '',
+                            author: '',
+                            description: '',
+                            bookImage: '',
+                            category: '',
+                            price: ''
+                        })
+                    }
+                    toast('Add Book Successfully');
+                })
+        }
+
+    }
+
+    const onKeyBtn = (e) => {
+        if (e.key === "Enter") {
+            Addbooks();
+        }
+    }
+
+
     return (
         <>
             <div className="contaiter mt-5">
@@ -11,73 +151,154 @@ const Addbooks = () => {
                                 Add Books
                             </h4>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-6 mb-0">
+                                    <label for="inputDescription">title</label>
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        className="form-control"
+                                        value={bookFormData.title}
+                                        placeholder="Description"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                title: ''
+                                            })
+                                            handleChange(e)
+                                        }}
+                                    />
+                                    {
+                                        error.title && <p>{error.title}</p>
+                                    }
+                                </div>
+                                <div className="form-group col-md-6 mb-0">
+                                    <label for="inputDescription">author</label>
+                                    <input
+                                        type="text"
+                                        name="author"
+                                        className="form-control"
+                                        value={bookFormData.author}
+                                        placeholder="Description"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                author: ''
+                                            })
+                                            handleChange(e)
+                                        }}
+                                    />
+                                    {
+                                        error.author && <p>{error.author}</p>
+                                    }
+                                </div>
+                                <div className="form-group col-md-6 mb-0">
                                     <label for="inputDescription">Description</label>
                                     <input
-                                        type="description"
+                                        type="text"
+                                        name="description"
                                         className="form-control"
-                                        id="Description"
+                                        value={bookFormData.description}
                                         placeholder="Description"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                description: ''
+                                            })
+                                            handleChange(e)
+                                        }}
                                     />
+                                    {
+                                        error.description && <p>{error.description}</p>
+                                    }
                                 </div>
-                                <div className="form-group col-md-6">
+                                {/* <div className="form-group col-md-6 mb-0">
                                     <label for="inputName">Name</label>
                                     <input
-                                        type="name"
+                                        type="text"
+                                        name="name"
                                         className="form-control"
-                                        id="Name"
+                                        value={bookFormData.name}
                                         placeholder="Name"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                name: ''
+                                            })
+                                            handleChange(e)
+                                        }}
+
                                     />
-                                </div>
+                                    {
+                                        error.name && <p>{error.name}</p>
+                                    }
+                                </div> */}
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-6 mb-0">
                                     <label for="inputPrice">Price</label>
                                     <input
-                                        type="price"
+                                        type="text"
+                                        name="price"
                                         className="form-control"
-                                        id="Price"
+                                        value={bookFormData.price}
                                         placeholder="Price"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                price: ''
+                                            })
+                                            handleChange(e)
+                                        }}
                                     />
+                                    {
+                                        error.price && <p>{error.price}</p>
+                                    }
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label for="inputauthor">Author</label>
-                                    <input 
-                                    type="author"
-                                    className="form-control"
-                                    id="Author"
-                                    placeholder="Author"
-                                    />
+                                <div className="form-group col-md-6 mb-0">
+                                    <label for="inputCategory">Category</label>
+                                    <select name="category" id="inputCategory" className="form-control"
+                                        value={bookFormData.category}
+                                        onChange={(e) =>
+                                            handleChange(e)
+                                        }>
+                                        {categoryDropDown &&
+                                            categoryDropDown?.map((x) => (
+                                                <option value={x.value}>{x.value}</option>
+                                            ))
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label for="inputCategory">Category</label>
-                                    <select id="inputCategory" className="form-control">
-                                        <option selected>React</option>
-                                        <option>java</option>
-                                        <option>C++</option>
-                                        <option>Asp.Net</option>
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label for="inputImage">Image</label>
+                                <div className="form-group col-md-6 ">
+                                    <label for="inputImage">bookImage</label>
                                     <input
                                         type="file"
+                                        name="bookImage"
                                         className="form-control"
-                                        id="Image"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                bookImage: ''
+                                            })
+                                            handleImageChange(e)
+                                        }}
+                                        onKeyPress={(e) => onKeyBtn(e)}
                                     />
+                                    {
+                                        error.bookImage && <p>{error.bookImage}</p>
+                                    }
                                 </div>
                             </div>
-                            <button type="sumbit" className="btn btn-primary">
-                                Sumbit
-                            </button>
+                            <p onClick={Addbooks} className="btn btn-primary">
+                                Addbooks
+                            </p>
                         </form>
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default Addbooks;

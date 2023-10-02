@@ -1,171 +1,181 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import '../css/Login.css';
+import image from '../Image/img2.jpg';
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const [isLogin, setIsLogin] = useState(true); // Initially, show the login form
+  const [lgnFormData, setLgnFormData] = useState({
+    email: '',
+    password: '',
+  });
 
-  const toggleForm = () => {
-    setIsLogin(!isLogin); // Toggle between login and register forms
-  };
+  const [error, setError] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    // console.log("lgnFormData", e.target.value);
+    setLgnFormData({
+      ...lgnFormData,
+      [e.target.name]: e.target.value
+
+    })
+  }
+
+
+
+
+  const navigate = useNavigate();
+
+  const SignIn = () => {
+
+    const error = {};
+
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!lgnFormData.email) {
+      error.email = "Please Email Required"
+    } else if (!emailRegex.test(lgnFormData.email)) {
+      error.email = "Invalid Email"
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
+    if (!lgnFormData.password) {
+      error.password = "Please Password Required"
+    } else if (!passwordRegex.test(lgnFormData.password)) {
+      error.password = "Invalid Password"
+    }
+
+    if (error.email || error.password) {
+      setError(error)
+      return;
+    }
+
+
+    const body = {
+      email: lgnFormData.email,
+      password: lgnFormData.password
+    }
+
+    axios.post("http://localhost:3001/api/v1/auth/login", body)
+      .then((res) => {
+        // console.log("res",res);
+        if (res.status === 200) {
+          setLgnFormData({
+            email: '',
+            password: '',
+          })
+          localStorage.setItem("token", res.data.token.access.token)
+          localStorage.setItem("userName", res.data.user.firstName)
+          navigate('/home')
+        }
+      }).catch((error) => {
+        if (error.response.data.message === "Incorrect email or password") {
+          toast.error(<p>{"Incorrect email or password..!"}</p>, {
+            position: "top-center",
+          });
+        }
+      })
+  }
+
+  const onKeyBtn = (e) => {
+    if (e.key === "Enter")
+      SignIn();
+  }
 
   return (
     <>
-      {/* <div className='container mt-5'>
-        <div className='row justify-content-center'>
-          <div className='col-md-8'>
-        <form className="border p-4">
-        <h4 className="text-center mb-4">Register</h4>
-          <div className='form-row'>
-            <div className='form-group col-md-6'>
-              <label for='inputEmail4'>Email</label>
-              <input
-                type='email'
-                className='form-control'
-                id='inputEmail4'
-                placeholder='Email'
-              />
-            </div>
-            <div className='form-group col-md-6'>
-              <label for='inputPassword4'>Password</label>
-              <div className='input-group'>
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  className='form-control'
-                  id='inputPassword4'
-                  placeholder='Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <div className='input-group-append'>
-                  <span
-                    className='input-group-text'
-                    onClick={togglePasswordVisibility}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {passwordVisible ? (
-                     <FontAwesomeIcon icon={faEyeSlash} /> // Eye slash icon for hiding password
-                    ) : (
-                      <FontAwesomeIcon icon={faEye} /> // Eye icon for showing password
-                    )}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className='form-row'>
-            <div className='form-group col-md-4'>
-              <label for='inputCity'>City</label>
-              <input type='text' className='form-control' id='inputCity' />
-            </div>
-            <div className='form-group col-md-4'>
-              <label for='inputState'>State</label>
-              <select id='inputState' className='form-control'>
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div className='form-group col-md-4'>
-              <label for='inputZip'>Zip</label>
-              <input type='text' className='form-control' id='inputZip' />
-            </div>
-          </div>
-          <div className='form-group'>
-            <div className='form-check'>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                id='gridCheck'
-              />
-              <label className='form-check-label' for='gridCheck'>
-                Check me out
-              </label>
-            </div>
-          </div>
-          <button type='submit' className='btn btn-primary'>
-            Sign in
-          </button>
-        </form>
-      </div>
-      </div>
-      </div> */}
-
-      <div className='container mt-5 ml-0' >
+      <div className='container mt-5 ml-4' style={{display:"flex"}}>
         {/* <div className='row justify-content-center'> */}
-        <div className='col-md-8'>
-          <form className='border border-primary p-4'>
-            <h4 className='text-center mb-4'>
-              Login
-              {/* {isLogin ? "Login" : "Register"}{" "} */}
-              {/* Display login or register based on the state */}
-            </h4>
-            <div className='form-row'>
-              <div className='form-group col-md-6'>
-                <label for='inputEmail4'>Email</label>
-                <input
-                  type='email'
-                  className='form-control'
-                  id='inputEmail4'
-                  placeholder='Email'
-                />
-              </div>
-              <div className='form-group col-md-6'>
-                <label for='inputPassword'>Password</label>
-                <div className='input-group'>
+          <div className='col-md-5'>
+            <form className='border border-primary p-4'>
+              <h4 className='text-center mb-4'>
+                Login
+              </h4>
+              <div className='form-row'>
+                <div className='form-group col-md-8 mb-0'>
+                  <label for="inputEmail">Email</label>
                   <input
-                    type={passwordVisible ? "text" : "password"}
+                    type='email'
+                    name='email'
                     className='form-control'
-                    id='inputPassword'
-                    placeholder='Password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={lgnFormData.email}
+                    placeholder='Email'
+                    onChange={(e) => {
+                      setError({
+                        ...error,
+                        email: ''
+                      })
+                      handleChange(e)
+                    }}
                   />
-                  <div className='input-group-append'>
-                    <span
-                      className='input-group-text'
-                      onClick={togglePasswordVisibility}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {passwordVisible ? (
-                        <FontAwesomeIcon icon={faEyeSlash} /> // Eye slash icon for hiding password
-                      ) : (
-                        <FontAwesomeIcon icon={faEye} /> // Eye icon for showing password
-                      )}
-                    </span>
-                  </div>
+                  {
+                    error.email && <p>{error.email}</p>
+                  }
                 </div>
               </div>
-            </div>
-            <button type='submit' className='btn btn-primary'>
-              SignIn
-              {/* {isLogin ? "Sign in" : "Sign up"}{" "} */}
-              {/* Display sign in or sign up based on the state */}
-            </button>
-            <p className='mt-3'>
-              Don't have an account?
-              {/* {isLogin
-                  ? "Don't have an account? "
-                  : "Already have an account? "} */}
-              <span
-                onClick={toggleForm}
-                style={{ cursor: "pointer", color: "blue" }}
-              >
-                Register
-                {/* {isLogin ? "Register" : "Login"}{" "} */}
-                {/* Toggle between login and register text */}
-              </span>
-            </p>
-          </form>
-        </div>
+              <div className='form-row'>
+                <div className='form-group col-md-8'>
+                  <label for="inputPassword">Password</label>
+                  <div className='input-group'>
+
+                    <input
+                      type={passwordVisible ? "text" : "password"}
+                      name='password'
+                      className='form-control'
+                      value={lgnFormData.password}
+                      placeholder='Password'
+                      onChange={(e) => {
+                        setError({
+                          ...error,
+                          Password: ''
+                        })
+                        handleChange(e)
+                      }}
+                      onKeyPress={(e) => onKeyBtn(e)}
+                    />
+
+
+                    <div className='input-group-append'>
+                      <span
+                        className='input-group-text'
+                        onClick={togglePasswordVisibility}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {passwordVisible ? (
+                          <FontAwesomeIcon icon={faEye} />// Eye slash icon for showinh password
+                        ) : (
+                          <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  {
+                    error.password && <p>{error.password}</p>
+                  }
+                </div>
+              </div>
+              <p className="btn btn-primary" onClick={() => SignIn()}>SignUp</p>
+              <p className='mt-3' style={{ color: "black" }}></p>
+              Don't have an account? <p onClick={() => navigate("/registration")} style={{ color: "blue" }}><u>Registration</u></p>
+            </form>
+          </div>
         {/* </div> */}
+        <div style={{width:"10%"}}>
+          <img className="login-img" src={image} alt="contact image" />
+        </div>
       </div>
     </>
   );
