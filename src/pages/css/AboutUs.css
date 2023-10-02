@@ -1,4 +1,4 @@
-.row{
+/* .row{
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     box-sizing: border-box;
@@ -52,4 +52,29 @@
 
 .container button:hover{
     background-color: #555;
+} */
+
+.image img{
+    width: 100%;
+    /* margin-left: 20%; */
+    /* margin-top: 1%; */
+}
+
+.About-section{
+    margin-left: 15%;
+}
+
+.About-section h1{
+    color:green;
+    padding-top: 3%;
+    padding-bottom: 0;
+}
+
+.contact{
+    display: flex;
+}
+
+.contact img{
+    width: 50%;
+    /* margin-right: ; */
 }

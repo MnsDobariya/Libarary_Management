@@ -1,10 +1,71 @@
 import React from "react";
 import image from '../Image/img4.jpg';
+import '../css/Contactus.css';
 
 const Contact = () => {
     return (
         <>
-            <div className="container mt-5" style={{ display: "flex" }}>
+         <div className="mx-auto gradient-custom mt-5" style={{ maxWidth: '800px', height: '400px' }}>
+        <div className="row pt-3 mx-3">
+          <div className="col-md-3">
+            <div className="text-center" style={{ marginTop: '50px', marginLeft: '10px' }}>
+              <i className="fas fa-shipping-fast text-white" style={{ fontSize: '3em' }}></i>
+              <h3 className="text-white">Welcome</h3>
+              <p className="white-text">You are 30 seconds away from completing your order!</p>
+            </div>
+            <div className="text-center">
+              <button className="btn btn-white rounded back-button">Go back</button>
+            </div>
+          </div>
+          <div className="col-md-9 justify-content-center">
+            <div className="card card-custom pb-4">
+              <div className="card-body mt-0 mx-5">
+                <div className="text-center mb-3 pb-2 mt-3">
+                  <h4 style={{ color: '#495057' }}>Delivery Details</h4>
+                </div>
+
+                <form className="mb-0">
+                  <div className="row mb-4">
+                    <div className="col">
+                      <label>First name</label>
+                      <input className="form-control" type="text" />
+                    </div>
+                    <div className="col">
+                      <label>Last name</label>
+                      <input className="form-control" type="text" />
+                    </div>
+                  </div>
+                  <div className="row mb-4">
+                    <div className="col">
+                      <label>City</label>
+                      <input className="form-control" type="text" />
+                    </div>
+                    <div className="col">
+                      <label>Zip</label>
+                      <input className="form-control" type="text" />
+                    </div>
+                  </div>
+                  <div className="row mb-4">
+                    <div className="col">
+                      <label>Address</label>
+                      <input className="form-control" type="text" />
+                    </div>
+                    <div className="col">
+                      <label>Email</label>
+                      <input className="form-control" type="text" />
+                    </div>
+                  </div>
+
+                  <div className="float-right">
+                    <button className="btn btn-primary rounded">Place order</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+            {/* <div className="container mt-5" style={{ display: "flex" }}>
                 <div className="col-md-7">
                     <form className="border boder-primary p-4">
                         <h4 className="text-center md-4">
@@ -56,7 +117,7 @@ const Contact = () => {
                     <img className="contact-img" src={image} alt="contact image" />
                 </div>
 
-            </div>
+            </div> */}
         </>
     )
 }

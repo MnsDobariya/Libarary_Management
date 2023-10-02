@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import '../css/Addbooks.css';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const categoryDropDown = [
     { label: "c", value: "c" },
@@ -42,6 +42,8 @@ const Addbooks = () => {
         price: ''
 
     })
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setBookFormData({
@@ -100,9 +102,7 @@ const Addbooks = () => {
 
         console.log("id", location?.state);
         const form_data = new FormData();
-        if (location?.state) {
-            form_data.append("id", location?.state?.id)
-        }
+        
         form_data.append("title", bookFormData?.title)
         form_data.append("author", bookFormData?.author)
         form_data.append("description", bookFormData?.description)
@@ -111,9 +111,11 @@ const Addbooks = () => {
         form_data.append("price", bookFormData?.price)
 
         if (location?.state) {
-            axios.post("http://localhost:3001/api/v1/books/get", form_data)
+            console.log("location?.state",location?.state);
+            axios.put(`http://localhost:3001/api/v1/books/update/${location?.state?.id}`, form_data)
                 .then((res) => {
-                    navigator("/books")
+                    console.log("update",res);
+                    navigate("/books")
                 })
         } else {
             axios.post("http://localhost:3001/api/v1/books/create", form_data)
@@ -129,6 +131,7 @@ const Addbooks = () => {
                         })
                     }
                     toast('Add Book Successfully');
+                    navigate("/home")
                 })
         }
 

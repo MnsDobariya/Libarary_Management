@@ -75,11 +75,12 @@ const Books = () => {
                         <FontAwesomeIcon icon={faEdit} onClick={() => {
                             navigator(`/addbooks`, { state: params.row });
                         }} />
-                        <FontAwesomeIcon icon={faDeleteLeft} onClick={(e) => {
+                        <FontAwesomeIcon icon={faDeleteLeft} data-toggle="modal" data-target="#exampleModalCenter" onClick={(e) => {
                             console.log("e", params.row.id);
                             // console.log(params.row.id);
                             setOpenPopUp(true)
                             setDeleteRowId(params.row.id)
+
 
                         }} />
                     </>
@@ -123,10 +124,51 @@ const Books = () => {
             } */}
             {openPopup &&
                 <div>
-                    hello
+                    {/* hello
                     <button onClick={() => deleteRecord(deleteRowId)}>Yes</button>
-                    <button onClick={() => { setOpenPopUp(false) }}>No</button>
+                    <button onClick={() => { setOpenPopUp(false) }}>No</button> */}
+
+
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => deleteRecord(deleteRowId)}>No</button>
+                                    <button type="button" class="btn btn-primary" onClick={() => setOpenPopUp(false)}>Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                // <div className="modal" tabindex="-1" role="dialog">
+                //     <div className="modal-dialog" role="document">
+                //         <div className="modal-content">
+                //             <div className="modal-header">
+                //                 <h5 className="modal-title">Modal title</h5>
+                //                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                //                     <span aria-hidden="true">&times;</span>
+                //                 </button>
+                //             </div>
+                //             <div className="modal-body">
+                //                 <p>Modal body text goes here.</p>
+                //             </div>
+                //             <div className="modal-footer">
+                //                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                //                 <button type="button" className="btn btn-primary">Save changes</button>
+                //             </div>
+                //         </div>
+                //     </div>
+                // </div>
 
             }
             <ToastContainer />
