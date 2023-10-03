@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import '../css/Addbooks.css';
 import { useLocation, useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 const categoryDropDown = [
     { label: "c", value: "c" },
@@ -102,7 +103,7 @@ const Addbooks = () => {
 
         console.log("id", location?.state);
         const form_data = new FormData();
-        
+
         form_data.append("title", bookFormData?.title)
         form_data.append("author", bookFormData?.author)
         form_data.append("description", bookFormData?.description)
@@ -111,10 +112,10 @@ const Addbooks = () => {
         form_data.append("price", bookFormData?.price)
 
         if (location?.state) {
-            console.log("location?.state",location?.state);
+            console.log("location?.state", location?.state);
             axios.put(`http://localhost:3001/api/v1/books/update/${location?.state?.id}`, form_data)
                 .then((res) => {
-                    console.log("update",res);
+                    console.log("update", res);
                     navigate("/books")
                 })
         } else {
@@ -293,13 +294,14 @@ const Addbooks = () => {
                                     }
                                 </div>
                             </div>
-                            <p onClick={Addbooks} className="btn btn-primary">
-                                Addbooks
+                            <p className="button" style={{ verticalAlign: "middle" }}><span className="sign-in-btn" onClick={Addbooks} >
+                                Addbooks</span>
                             </p>
                         </form>
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

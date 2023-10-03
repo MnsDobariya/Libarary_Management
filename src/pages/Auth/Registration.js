@@ -130,7 +130,7 @@ const Registration = () => {
 
   return (
     <>
-    
+
       <div className='container mt-5 '>
         <div className='row justify-content-center'>
           <div className='col-md-8'>
@@ -276,7 +276,9 @@ const Registration = () => {
                 </div>
               </div>
 
-              <p onClick={SignUp} className='btn btn-primary'>SingUp</p>
+              <p className='button' style={{ verticalAlign: "middle" }}><span className="sign-in-btn" onClick={SignUp}>
+                SingUp</span>
+              </p>
               <p className='mt-3' style={{ color: "black" }}>
                 Already have an account?<p onClick={() => navigate("/")} style={{ color: "blue" }}><u>Login</u></p>
               </p>

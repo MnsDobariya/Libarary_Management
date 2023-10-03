@@ -4,8 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft, faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faDeleteLeft, faEdit, faEye, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Footer from "./Footer";
 
 
 
@@ -74,8 +75,8 @@ const Books = () => {
                     <>
                         <FontAwesomeIcon icon={faEdit} onClick={() => {
                             navigator(`/addbooks`, { state: params.row });
-                        }} />
-                        <FontAwesomeIcon icon={faDeleteLeft} data-toggle="modal" data-target="#exampleModalCenter" onClick={(e) => {
+                        }} style={{marginRight:"5%",width:"25%"}} />
+                        <FontAwesomeIcon icon={faTrashCan}  data-toggle="modal" data-target="#exampleModalCenter" onClick={(e) => {
                             console.log("e", params.row.id);
                             // console.log(params.row.id);
                             setOpenPopUp(true)
@@ -172,6 +173,7 @@ const Books = () => {
 
             }
             <ToastContainer />
+            <Footer />
         </>
     )
 }

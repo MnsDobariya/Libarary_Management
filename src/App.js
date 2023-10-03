@@ -13,6 +13,7 @@ import AboutUs from './pages/Auth/AboutUs';
 import Contact from './pages/Auth/Contact';
 import Books from './pages/Auth/Books';
 import Profile from './pages/Auth/Profile';
+import Footer from './pages/Auth/Footer';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/books" element={<Books />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/footer" element={<Footer />} />
         {/* <Route path="/home" element={<Home />} /> */}
         {/* <Route path="/lgn" element={<Lgn />} /> */}
 

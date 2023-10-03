@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import image from "../Image/first_activity_image.png";
 import axios from "axios";
+import Footer from "./Footer";
+// import '../css/Home.css';
 
 const Home = () => {
   const [homeData, setHomeData] = useState([]);
@@ -19,7 +21,9 @@ const Home = () => {
 
 
   return (
+    <>
     <div className="">
+      <p style={{color: "#0262AA",textAlign: "center",fontSize:"9vh"}}>Home</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: "1.5% ", marginTop: "1.5%" }}>
         {homeData.map((item) => (
           <div className='card' style={{ width: "20rem", margin: "1.5%" }} key={item.id}>
@@ -50,6 +54,8 @@ const Home = () => {
         ))}
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

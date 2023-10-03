@@ -1,11 +1,12 @@
 import React from "react";
 import image from '../Image/img4.jpg';
 import '../css/Contactus.css';
+import Footer from "./Footer";
 
 const Contact = () => {
     return (
         <>
-         <div className="mx-auto gradient-custom mt-5" style={{ maxWidth: '800px', height: '400px' }}>
+         <div className="mx-auto gradient-custom mt-5" style={{ maxWidth: '60%',height:"100%" }}>
         <div className="row pt-3 mx-3">
           <div className="col-md-3">
             <div className="text-center" style={{ marginTop: '50px', marginLeft: '10px' }}>
@@ -21,37 +22,37 @@ const Contact = () => {
             <div className="card card-custom pb-4">
               <div className="card-body mt-0 mx-5">
                 <div className="text-center mb-3 pb-2 mt-3">
-                  <h4 style={{ color: '#495057' }}>Delivery Details</h4>
+                  <h4 style={{ color: '#495057' }}>Contact Us</h4>
                 </div>
 
                 <form className="mb-0">
-                  <div className="row mb-4">
-                    <div className="col">
+                  <div className="form-row ">
+                    <div className="form-group col-md-6">
                       <label>First name</label>
                       <input className="form-control" type="text" />
                     </div>
-                    <div className="col">
+                    <div className="form-group col-md-6">
                       <label>Last name</label>
                       <input className="form-control" type="text" />
                     </div>
                   </div>
-                  <div className="row mb-4">
-                    <div className="col">
-                      <label>City</label>
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label>Email</label>
                       <input className="form-control" type="text" />
                     </div>
-                    <div className="col">
-                      <label>Zip</label>
+                    <div className="form-group col-md-6">
+                      <label>Comapany</label>
                       <input className="form-control" type="text" />
                     </div>
                   </div>
-                  <div className="row mb-4">
-                    <div className="col">
-                      <label>Address</label>
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label>City</label>
                       <input className="form-control" type="text" />
                     </div>
-                    <div className="col">
-                      <label>Email</label>
+                    <div className="form-group col-md-6">
+                      <label>Zip</label>
                       <input className="form-control" type="text" />
                     </div>
                   </div>
@@ -118,6 +119,7 @@ const Contact = () => {
                 </div>
 
             </div> */}
+            <Footer/>
         </>
     )
 }
