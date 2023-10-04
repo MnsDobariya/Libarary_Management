@@ -4,69 +4,69 @@ import '../css/Contactus.css';
 import Footer from "./Footer";
 
 const Contact = () => {
-    return (
-        <>
-         <div className="mx-auto gradient-custom mt-5" style={{ maxWidth: '60%',height:"100%" }}>
-        <div className="row pt-3 mx-3">
-          <div className="col-md-3">
-            <div className="text-center" style={{ marginTop: '50px', marginLeft: '10px' }}>
-              <i className="fas fa-shipping-fast text-white" style={{ fontSize: '3em' }}></i>
-              <h3 className="text-white">Welcome</h3>
-              <p className="white-text">You are 30 seconds away from completing your order!</p>
-            </div>
-            <div className="text-center">
-              <button className="btn btn-white rounded back-button">Go back</button>
-            </div>
-          </div>
-          <div className="col-md-9 justify-content-center">
-            <div className="card card-custom pb-4">
-              <div className="card-body mt-0 mx-5">
-                <div className="text-center mb-3 pb-2 mt-3">
-                  <h4 style={{ color: '#495057' }}>Contact Us</h4>
+  return (
+    <>
+      <section class="contact_us">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <div class="contact_inner">
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="contact_form_inner">
+                      <div class="contact_field">
+                        <h3>Contatc Us</h3>
+                        <input type="text" class="form-control form-group" placeholder="FirstName" style={{ marginTop: "15%" }} />
+                        <input type="text" class="form-control form-group" placeholder="LastName" />
+                        <input type="text" class="form-control form-group" placeholder="Email" />
+                        <input type="text" class="form-control form-group" placeholder="Company" />
+
+                        <button
+                          className="btn "
+                          style={{backgroundColor:"#0c4c91",color:"white",marginRight: '10px', cursor: 'pointer', padding: '10px 10px' }}
+                          onClick={() => {
+
+                          }}
+                        >Add Book</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="right_conatct_social_icon d-flex align-items-end">
+                      {/* <div class="socil_item_inner d-flex">
+                        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                      </div> */}
+                    </div>
+                  </div>
                 </div>
-
-                <form className="mb-0">
-                  <div className="form-row ">
-                    <div className="form-group col-md-6">
-                      <label>First name</label>
-                      <input className="form-control" type="text" />
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label>Last name</label>
-                      <input className="form-control" type="text" />
-                    </div>
+                <div class="contact_info_sec">
+                  <h4>Contact Info</h4>
+                  <div class="d-flex info_single align-items-center">
+                    <i class="fas fa-headset"></i>
+                    <span>+91 90161 95861</span>
                   </div>
-                  <div className="form-row">
-                    <div className="form-group col-md-6">
-                      <label>Email</label>
-                      <input className="form-control" type="text" />
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label>Comapany</label>
-                      <input className="form-control" type="text" />
-                    </div>
+                  <div class="d-flex info_single align-items-center">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>LibraryManagement@gmail.com</span>
                   </div>
-                  <div className="form-row">
-                    <div className="form-group col-md-6">
-                      <label>City</label>
-                      <input className="form-control" type="text" />
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label>Zip</label>
-                      <input className="form-control" type="text" />
-                    </div>
+                  <div class="d-flex info_single align-items-center">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Library Management</span>
                   </div>
 
-                  <div className="float-right">
-                    <button className="btn btn-primary rounded">Place order</button>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-            {/* <div className="container mt-5" style={{ display: "flex" }}>
+      </section>
+
+
+
+
+      {/* <div className="container mt-5" style={{ display: "flex" }}>
                 <div className="col-md-7">
                     <form className="border boder-primary p-4">
                         <h4 className="text-center md-4">
@@ -119,9 +119,8 @@ const Contact = () => {
                 </div>
 
             </div> */}
-            <Footer/>
-        </>
-    )
+    </>
+  )
 }
 
 export default Contact;

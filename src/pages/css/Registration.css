@@ -36,7 +36,7 @@
 
 } */
 
-.form-row p {
+/* .form-row p {
     color: red;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -90,4 +90,18 @@
 .button:hover span:after {
     opacity: 1;
     right: 0;
+} */
+
+
+.img-fluid{
+    height: 100%;
+}
+
+.registerHere-text {
+    color: #393f81;
+    margin-left: 10px;
+}
+
+.registerHere-text:hover {
+    cursor: pointer;
 }

@@ -22,7 +22,7 @@
 
 
 :root {
-  --navBg: #060b26;
+  --navBg: #0c4c91;
 }
 
 
@@ -48,5 +48,10 @@
   /* Add hover effect */
   .navbar p:hover {
     background-color: #d3d3d3;
-    color: #000000;
+    color: #0c4c91;
+  }
+
+  .logout-right {
+    position: absolute;
+    right: 10px;
   }

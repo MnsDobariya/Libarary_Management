@@ -7,6 +7,9 @@ import Login from './pages/Auth/Login'
 import Registration from './pages/Auth/Registration';
 import Forgot from './pages/Auth/Forgot';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +19,7 @@ root.render(
   // <Registration />
   //<Forgot />
   <BrowserRouter>
+  <ToastContainer />
     <App />
   </BrowserRouter>
 );

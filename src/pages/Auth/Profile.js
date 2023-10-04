@@ -1,9 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import '../css/Userprofile.css';
 import Footer from "./Footer";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const Profile = () => {
+
+    const [userProfile, setUserProfile] = useState([]);
+    const [fname, setFname] = useState();
+    const [lname, setLname] = useState();
+    const [address, setAddress] = useState();
+    const [city, setCity] = useState();
+    const [state, setState] = useState();
+    const [country, setCountry] = useState();
+    const [phone, setPhone] = useState();
+    const [zipCode, setZipcode] = useState();
+    const [zender, setZender] = useState();
+    const [userId, setUserId] = useState();
+    const [email, setEmail] = useState();
+
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    const getProfileUser = () => {
+        axios.get("http://localhost:3001/api/v1/users/me", { headers: { "Authorization": `Bearer ${token}` } })
+            .then((res) => {
+                setUserId(res?.data.id)
+                setFname(res?.data.firstName);
+                setLname(res?.data.lastName);
+                setAddress(res?.data.address);
+                setEmail(res?.data.email);
+                setCity(res?.data.city);
+                setState(res?.data.state);
+                setCountry(res?.data.country);
+                setPhone(res?.data.phone);
+                setZender(res?.data.gender);
+                setZipcode(res?.data.zipCode);
+            })
+    };
+
+    useEffect(() => {
+        getProfileUser();
+    }, []);
+
+    const onClickUpdate = () => {
+
+        const form_data = new FormData();
+
+        form_data.append("firstName", fname)
+        form_data.append("lastName", lname)
+        form_data.append("address", address)
+        form_data.append("city", city)
+        form_data.append("state", state)
+        form_data.append("country", country)
+        form_data.append("phone", phone)
+        form_data.append("zipCode", zipCode)
+        form_data.append("gender", zender)
+
+        axios.put(`http://localhost:3001/api/v1/users/me`, form_data ,
+            { headers: { "content-type": "multipart/form-data", "Authorization": `Bearer ${token}` } })
+            .then((res) => {
+                console.log("res", res);
+                toast.success("Profile updated Successfully")
+            })
+            .catch((error) => {
+                console.log("error-->", error)
+                toast.error("Somthing went to wrong")
+            })
+
+    }
+
     return (
         <>
             <p style={{ color: "#0262AA", textAlign: "center", fontSize: "9vh" }}>Profile</p>
@@ -42,7 +110,10 @@ const Profile = () => {
                                                 type="text"
                                                 name="fname"
                                                 className="form-control"
-                                                placeholder="Enter The First Name" />
+                                                placeholder="Enter The First Name"
+                                                value={fname}
+                                                onChange={(e) => setFname(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -52,7 +123,24 @@ const Profile = () => {
                                                 type="text"
                                                 name="lname"
                                                 className="form-control"
-                                                placeholder="Enter The Last Name" />
+                                                placeholder="Enter The Last Name"
+                                                value={lname}
+                                                onChange={(e) => setLname(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div className="form-group mb-1">
+                                            <label for="email">Email</label>
+                                            <input
+                                                type="text"
+                                                name="email"
+                                                disabled
+                                                className="form-control"
+                                                placeholder="Enter The Last Name"
+                                                value={email}
+                                            // onChange={(e) => setAddress(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -62,7 +150,9 @@ const Profile = () => {
                                                 type="text"
                                                 name="address"
                                                 className="form-control"
-                                                placeholder="Enter The Address" />
+                                                placeholder="Enter The Address"
+                                                value={address}
+                                                onChange={(e) => setAddress(e.target.value)} />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -72,7 +162,10 @@ const Profile = () => {
                                                 type="text"
                                                 name="city"
                                                 className="form-control"
-                                                placeholder="Enter The City" />
+                                                placeholder="Enter The City"
+                                                value={city}
+                                                onChange={(e) => setCity(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -82,7 +175,10 @@ const Profile = () => {
                                                 type="text"
                                                 name="state"
                                                 className="form-control"
-                                                placeholder="Enter The State" />
+                                                placeholder="Enter The State"
+                                                value={state}
+                                                onChange={(e) => setState(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -90,8 +186,12 @@ const Profile = () => {
                                             <label for="country">Country</label>
                                             <input
                                                 type="text"
+                                                name="country"
                                                 className="form-control"
-                                                placeholder="Enter The Country" />
+                                                placeholder="Enter The Country"
+                                                value={country}
+                                                onChange={(e) => setCountry(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -101,7 +201,9 @@ const Profile = () => {
                                                 type="text"
                                                 name="phone"
                                                 className="form-control"
-                                                placeholder="Enter The Phone Number" />
+                                                placeholder="Enter The Phone Number"
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)} />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -110,7 +212,10 @@ const Profile = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Zip Code" />
+                                                placeholder="Zip Code"
+                                                value={zipCode}
+                                                onChange={(e) => setZipcode(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 ">
@@ -119,12 +224,16 @@ const Profile = () => {
                                             <input
                                                 type="radio"
                                                 name="male"
+                                                checked={zender === 'm'}
+                                                onChange={() => setZender('m')}
                                             />
                                             Male
                                             <input
                                                 type="radio"
                                                 name="female"
+                                                checked={zender === 'f'}
                                                 style={{ marginLeft: "10px" }}
+                                                onChange={() => setZender("f")}
                                             />
                                             Female
                                         </div>
@@ -136,7 +245,9 @@ const Profile = () => {
                                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div className="text-center">
                                         <button type="button" name="submit" className="btn btn-secondary m-3">Cancel</button>
-                                        <button type="button" name="submit" className="btn btn-primary">Update</button>
+                                        <button type="button" name="submit" className="btn btn-primary"
+                                            onClick={() => onClickUpdate()}
+                                        >Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +353,6 @@ const Profile = () => {
                     </div>
                 </div>
             </div> */}
-            <Footer />
         </>
     )
 }

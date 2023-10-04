@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import image from "../Image/first_activity_image.png";
 import axios from "axios";
 import Footer from "./Footer";
-// import '../css/Home.css';
+import '../css/Home.css';
 
 const Home = () => {
   const [homeData, setHomeData] = useState([]);
@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <>
-    <div className="">
+    {/* <div className="">
       <p style={{color: "#0262AA",textAlign: "center",fontSize:"9vh"}}>Home</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: "1.5% ", marginTop: "1.5%" }}>
         {homeData.map((item) => (
@@ -46,15 +46,45 @@ const Home = () => {
                 <h5>Price:</h5>
                 <p className='card-text'>{item.price}</p>
               </div>
-              {/* <p className='btn btn-primary'>
-                Submit
-              </p> */}
+            
             </div>
           </div>
         ))}
       </div>
-    </div>
-    <Footer />
+    </div> */}
+    <div className="container">
+    <div className="row" style={{marginTop: '15px'}}>
+{homeData && homeData?.map((item) => (
+        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div className="card shadow">
+                <img style={{height:'50px'}} src={`http://localhost:3001${item?.bookImage}`} className="card-img-top" alt="..." />
+                <div className="card-body">
+                    <div style={{display:"flex"}}> 
+                    <label>Name : </label>
+                    <h5 className="card-title">{item?.name}</h5>
+                    </div>
+                    <div style={{display:"flex"}}>
+                    <label>Price : </label>
+                    <h6 className="card-text">${item?.price}</h6>
+                    </div>
+                </div>
+                <div className="card-body card-p">
+                    <div className="row">
+                        <div className="col col-xs-4 ">
+                        </div>
+                        <div className="col col-xs-4 ">
+                        </div>
+                        <div className="col col-xs-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        ))}
+        </div>
+</div>
     </>
   );
 };

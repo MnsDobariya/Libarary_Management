@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft, faEdit, faEye, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Footer from "./Footer";
+import Addbooks from "./Addbooks";
 
 
 
@@ -75,8 +76,8 @@ const Books = () => {
                     <>
                         <FontAwesomeIcon icon={faEdit} onClick={() => {
                             navigator(`/addbooks`, { state: params.row });
-                        }} style={{marginRight:"5%",width:"25%"}} />
-                        <FontAwesomeIcon icon={faTrashCan}  data-toggle="modal" data-target="#exampleModalCenter" onClick={(e) => {
+                        }} style={{ marginRight: "5%", width: "25%" }} />
+                        <FontAwesomeIcon icon={faTrashCan} data-toggle="modal" data-target="#exampleModalCenter" onClick={(e) => {
                             console.log("e", params.row.id);
                             // console.log(params.row.id);
                             setOpenPopUp(true)
@@ -90,27 +91,30 @@ const Books = () => {
         },
     ];
 
+    const DeleteNo = () =>{
+        setOpenPopUp(false)
+    }
     const deleteRecord = (id) => {
-        // console.log("abc",id);
+        axios.delete(`http://localhost:3001/api/v1/books/delete/${id}`)
+        .then((res) => {
+            // console.log("res.data",res.data);
+            toast.success("Deleted successfully");
+            getBookData()
+        })
     }
 
     return (
         <>
+        <div style={{width: '84%', margin: '5px 0px 0px 110px'}}>
             <DataGrid rows={booksData} columns={columns} pageSize={5}
                 components={{
                     Toolbar: () => (
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <GridToolbar />
-                            <div>
-                                <button
-                                    className="btn btn-primary edit-btn"
-                                    style={{ marginRight: '10px', cursor: 'pointer', padding: '10px 10px' }}
-                                    onClick={() => {
 
-                                        navigator('/addbooks')
-                                    }}
-                                >Add Book</button>
-                            </div>
+                            <p className="button" style={{backgroundColor:"#0c4c91",color:"white"}} onClick={() => navigator(`/addbooks`)}>
+                                Add Books
+                            </p>
                         </div>
                     ),
                 }}
@@ -120,6 +124,7 @@ const Books = () => {
                 }}
                 className="custom-data-grid"
             />
+            </div>
             {/* {
                 console.log("hello", rows.id)
             } */}
@@ -140,11 +145,11 @@ const Books = () => {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    Are you sure..?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => deleteRecord(deleteRowId)}>No</button>
-                                    <button type="button" class="btn btn-primary" onClick={() => setOpenPopUp(false)}>Yes</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onClick={DeleteNo}>No</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => deleteRecord(deleteRowId)}>Yes</button>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +178,6 @@ const Books = () => {
 
             }
             <ToastContainer />
-            <Footer />
         </>
     )
 }

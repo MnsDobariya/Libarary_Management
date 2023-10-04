@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import '../css/Addbooks.css';
+// import '../css/Addbooks.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 
@@ -132,7 +132,7 @@ const Addbooks = () => {
                         })
                     }
                     toast('Add Book Successfully');
-                    navigate("/home")
+                    navigate("/books")
                 })
         }
 
@@ -195,6 +195,8 @@ const Addbooks = () => {
                                         error.author && <p>{error.author}</p>
                                     }
                                 </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-group col-md-6 mb-0">
                                     <label for="inputDescription">Description</label>
                                     <input
@@ -236,8 +238,6 @@ const Addbooks = () => {
                                         error.name && <p>{error.name}</p>
                                     }
                                 </div> */}
-                            </div>
-                            <div className="form-row">
                                 <div className="form-group col-md-6 mb-0">
                                     <label for="inputPrice">Price</label>
                                     <input
@@ -258,6 +258,8 @@ const Addbooks = () => {
                                         error.price && <p>{error.price}</p>
                                     }
                                 </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-group col-md-6 mb-0">
                                     <label for="inputCategory">Category</label>
                                     <select name="category" id="inputCategory" className="form-control"
@@ -272,8 +274,6 @@ const Addbooks = () => {
                                         }
                                     </select>
                                 </div>
-                            </div>
-                            <div className="form-row">
                                 <div className="form-group col-md-6 ">
                                     <label for="inputImage">bookImage</label>
                                     <input
@@ -294,14 +294,13 @@ const Addbooks = () => {
                                     }
                                 </div>
                             </div>
-                            <p className="button" style={{ verticalAlign: "middle" }}><span className="sign-in-btn" onClick={Addbooks} >
-                                Addbooks</span>
+                            <p className="button" style={{backgroundColor:"#0c4c91",color:"white"}} onClick={Addbooks} >
+                                Addbooks
                             </p>
                         </form>
                     </div>
-                </div>
-            </div>
-            <Footer />
+                </div >
+            </div >
         </>
     );
 }
