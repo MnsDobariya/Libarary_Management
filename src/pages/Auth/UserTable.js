@@ -10,20 +10,6 @@ import axios from "axios";
 
 
 
-// const rows = [
-//     { id: 1, description: 'Snow', name: 'Jon', price: 35, category: 'c', Image: 'Image' },
-//     { id: 2, description: 'Lannister', name: 'Cersei', price: 42, category: 'c++', Image: 'Image' },
-//     { id: 3, description: 'Lannister', name: 'Jaime', price: 45, category: 'java', Image: 'Image' },
-//     { id: 4, description: 'Stark', name: 'Arya', price: 16, category: 'asp.net', Image: 'Image' },
-//     { id: 5, description: 'Targaryen', name: 'Daenerys', price: null, category: 'react', Image: 'Image' },
-//     { id: 6, description: 'Melisandre', name: null, price: 150, category: 'c', Image: 'Image' },
-//     { id: 7, description: 'Clifford', name: 'Ferrara', price: 44, category: 'c++', Image: 'Image' },
-//     { id: 8, description: 'Frances', name: 'Rossini', price: 36, category: 'java', Image: 'Image' },
-//     { id: 9, description: 'Roxie', name: 'Harvey', price: 65, category: 'asp.net', Image: 'Image' },
-// ];
-
-
-
 // toast.configure();
 
 const categoryDropDown = [
@@ -34,19 +20,22 @@ const categoryDropDown = [
     { label: "react", value: "react" },
 ];
 
-const Books = () => {
-    const [booksData, setBookData] = useState([])
+const UserTable = () => {
+    const [userData, setUserData] = useState([])
     // console.log("books",booksData);
-    const getBookData = () => {
-        axios.get("http://localhost:3001/api/v1/books/get")
+    const token = localStorage.getItem("token");
+    const getUserData = () => {
+
+
+        axios.get("http://localhost:3001/api/v1/users/get", { headers: { "Authorization": `Bearer ${token}` } })
             .then((res) => {
-                // console.log("response",res);
-                setBookData(res?.data)
+                // console.log("response contact",res);
+                setUserData(res?.data)
             })
     }
 
     useEffect(() => {
-        getBookData()
+        getUserData()
     }, [])
 
     const [openPopup, setOpenPopUp] = useState(false)
@@ -54,19 +43,17 @@ const Books = () => {
 
     const navigator = useNavigate();
 
-    const indexedData = booksData.map((item, index) => ({
+    const indexedData = userData.map((item, index) => ({
         ...item,
         index: index + 1,
     }));
 
     const columns = [
         { field: 'index', headerName: 'ID', width: 90 },
-        { field: 'title', headerName: 'Title', width: 150 },
-        { field: 'author', headerName: 'Author', width: 150 },
-        { field: 'description', headerName: 'Description', width: 150 },
-        { field: 'bookImage', headerName: 'BookImage', width: 150 },
-        { field: 'category', headerName: 'category', width: 150 },
-        { field: 'price', headerName: 'price', width: 150 },
+        { field: 'firstName', headerName: 'FristName', width: 150 },
+        { field: 'lastName', headerName: 'LastName', width: 150 },
+        { field: 'email', headerName: 'Email', width: 150 },
+        { field: 'phone', headerName: 'Phone', width: 150 },
         // action
 
 
@@ -98,11 +85,11 @@ const Books = () => {
         setOpenPopUp(false)
     }
     const deleteRecord = (id) => {
-        axios.delete(`http://localhost:3001/api/v1/books/delete/${id}`)
+        axios.delete(`http://localhost:3001/api/v1/users/delete/${id}`,{ headers: { "Authorization": `Bearer ${token}` } })
             .then((res) => {
                 // console.log("res.data",res.data);
                 toast.success("Deleted successfully");
-                getBookData()
+                getUserData()
             })
     }
 
@@ -185,4 +172,4 @@ const Books = () => {
     )
 }
 
-export default Books;
+export default UserTable;

@@ -14,6 +14,9 @@ import Contact from './pages/Auth/Contact';
 import Books from './pages/Auth/Books';
 import Profile from './pages/Auth/Profile';
 import Footer from './pages/Auth/Footer';
+import BookDetail from './pages/Auth/BookDetail';
+import ContactUsTable from './pages/Auth/ContactUsTable';
+import UserTable from './pages/Auth/UserTable';
 // import Card from './pages/Auth/Card';
 
 
@@ -34,6 +37,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/books" element={<Books />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/bookdetail" element={<BookDetail />} />
+        <Route path="/contactustable" element={<ContactUsTable />} />
+        <Route path="/usertable" element={<UserTable />} />
         {/* <Route path="/card" element={<Card />} /> */}
         {/* <Route path="/home" element={<Home />} /> */}
         {/* <Route path="/lgn" element={<Lgn />} /> */}

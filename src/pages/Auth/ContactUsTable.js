@@ -34,19 +34,19 @@ const categoryDropDown = [
     { label: "react", value: "react" },
 ];
 
-const Books = () => {
-    const [booksData, setBookData] = useState([])
+const ContactUsTable = () => {
+    const [contactData, setContactData] = useState([])
     // console.log("books",booksData);
-    const getBookData = () => {
-        axios.get("http://localhost:3001/api/v1/books/get")
+    const getContactData = () => {
+        axios.get("http://localhost:3001/api/v1/contactUs/get")
             .then((res) => {
-                // console.log("response",res);
-                setBookData(res?.data)
+                // console.log("response contact",res);
+                setContactData(res?.data)
             })
     }
 
     useEffect(() => {
-        getBookData()
+        getContactData()
     }, [])
 
     const [openPopup, setOpenPopUp] = useState(false)
@@ -54,19 +54,18 @@ const Books = () => {
 
     const navigator = useNavigate();
 
-    const indexedData = booksData.map((item, index) => ({
+    const indexedData = contactData.map((item, index) => ({
         ...item,
         index: index + 1,
     }));
 
     const columns = [
         { field: 'index', headerName: 'ID', width: 90 },
-        { field: 'title', headerName: 'Title', width: 150 },
-        { field: 'author', headerName: 'Author', width: 150 },
-        { field: 'description', headerName: 'Description', width: 150 },
-        { field: 'bookImage', headerName: 'BookImage', width: 150 },
-        { field: 'category', headerName: 'category', width: 150 },
-        { field: 'price', headerName: 'price', width: 150 },
+        { field: 'name', headerName: 'Name', width: 150 },
+        { field: 'email', headerName: 'Email', width: 150 },
+        { field: 'phone', headerName: 'Phone', width: 150 },
+        { field: 'subject', headerName: 'Subject', width: 150 },
+        { field: 'message', headerName: 'Message', width: 150 },
         // action
 
 
@@ -98,11 +97,11 @@ const Books = () => {
         setOpenPopUp(false)
     }
     const deleteRecord = (id) => {
-        axios.delete(`http://localhost:3001/api/v1/books/delete/${id}`)
+        axios.delete(`http://localhost:3001/api/v1/contactUs/delete/${id}`)
             .then((res) => {
                 // console.log("res.data",res.data);
                 toast.success("Deleted successfully");
-                getBookData()
+                getContactData()
             })
     }
 
@@ -185,4 +184,4 @@ const Books = () => {
     )
 }
 
-export default Books;
+export default ContactUsTable;

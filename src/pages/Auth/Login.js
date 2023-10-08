@@ -93,7 +93,9 @@ const Login = () => {
   };
 
   const onKeyBtn = (e) => {
-    if (e.key === "Enter") SignIn();
+    if (e.key === "Enter") {
+      SignIn();
+    }
   };
 
   const moveRegister = () =>{
@@ -102,7 +104,7 @@ const Login = () => {
 
   return (
     <>
-      <section className='vh-100' style={{ backgroundColor: "#9A616D" }}>
+      <section className='vh-100' style={{ backgroundColor: "#9A616D",marginTop:"5%" }}>
         <div className='container py-5 h-100'>
           <div className='row d-flex justify-content-center align-items-center h-100'>
             <div className='col col-xl-10'>

@@ -83,3 +83,26 @@
     opacity: 1;
     right: 0;
 }
+
+.add-book-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .add-book-btn .button span {
+    padding: 15px 30px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+  }
+  p1.button.cancel {
+    margin-inline-start: 20px;
+  }
+  .add-book-btn .button.cancel span {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+  }
+  .add-book-btn  .button span:after {
+    display: none;
+  }

@@ -99,6 +99,18 @@ const Navbars = () => {
                              Books
                         </Link>
                     </li>}
+                    {role === "admin" &&
+                    <li className='nav-item'>
+                            <Link className='nav-link' to='/contactustable' style={{ color: "white" }}>
+                                ContactUsTable
+                            </Link>
+                        </li>}
+                        {role === "admin" &&
+                    <li className='nav-item'>
+                            <Link className='nav-link' to='/usertable' style={{ color: "white" }}>
+                                UserTable
+                            </Link>
+                        </li>}
                         <li className='nav-item'>
                             <Link className='nav-link' to='/aboutus' style={{ color: "white" }}>
                                 About
@@ -106,7 +118,7 @@ const Navbars = () => {
                         </li>
                         <li className='nav-item'>
                             <Link className='nav-link' to='/contact' style={{ color: "white" }}>
-                                Contact Us
+                                ContactUs
                             </Link>
                         </li>
                         {getToken ? (

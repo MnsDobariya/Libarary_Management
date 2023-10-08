@@ -143,7 +143,7 @@ const Registration = () => {
   };
   return (
     <>
-      <section className='vh-100' style={{ backgroundColor: "#9A616D" }}>
+      <section className='vh-100' style={{ backgroundColor: "#9A616D",marginTop:"5%"}}>
         <div className='container py-5 h-100'>
           <div className='row d-flex justify-content-center align-items-center h-100'>
             <div className='col col-xl-10'>
@@ -225,10 +225,20 @@ const Registration = () => {
                             Mobile No.
                           </label>
                           <input
-                            type='email'
+                            type='mobile'
+                            name="mobile"
+                            value={regFormData.mobile}
                             id='form2Example17'
                             className='form-control'
+                            onChange={(e) => {
+                              setError({
+                                ...error,
+                                mobile: "",
+                              });
+                              handleChange(e);
+                            }}
                           />
+                          {error.mobile && <p>{error.mobile}</p>}
                         </div>
                         <div className='form-outline mb-1'>
                           <label

@@ -168,3 +168,10 @@ button.contact_form_submit {
     height: 30px;
     width: 450px;
 }
+
+.contact_inner p {
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: small;
+}

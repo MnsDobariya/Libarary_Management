@@ -20,6 +20,7 @@ const Profile = () => {
     const [zender, setZender] = useState();
     const [userId, setUserId] = useState();
     const [email, setEmail] = useState();
+    const [profilePicture, setProfilePicture] = useState();
 
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ const Profile = () => {
                 setPhone(res?.data.phone);
                 setZender(res?.data.gender);
                 setZipcode(res?.data.zipCode);
+                setZipcode(res?.data.profilePicture);
             })
     };
 
@@ -45,6 +47,37 @@ const Profile = () => {
         getProfileUser();
     }, []);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserProfile({
+            ...userProfile,
+            [name]: value,
+        });
+    };
+
+    const [imagePreview, setImagePreview] = useState(null);
+    const handleImageChange = (e) => {
+        setUserProfile({
+            ...userProfile,
+            profilePicture: e.target.files[0],
+        });
+
+        const file = e.target.files[0];
+
+        if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setUserProfile({
+                    ...userProfile,
+                    profilePicture: file, // Set the image property to the File object directly
+                });
+                setImagePreview(reader.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    };
     const onClickUpdate = () => {
 
         const form_data = new FormData();
@@ -58,8 +91,9 @@ const Profile = () => {
         form_data.append("phone", phone)
         form_data.append("zipCode", zipCode)
         form_data.append("gender", zender)
+        form_data.append("profilePicture", profilePicture)
 
-        axios.put(`http://localhost:3001/api/v1/users/me`, form_data ,
+        axios.put(`http://localhost:3001/api/v1/users/me`, form_data,
             { headers: { "content-type": "multipart/form-data", "Authorization": `Bearer ${token}` } })
             .then((res) => {
                 console.log("res", res);
@@ -85,10 +119,21 @@ const Profile = () => {
                                         <div className="user-avatar">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" />
                                         </div>
-                                        <h5 className="user-name">Yuki Hayashi</h5>
-                                        <h6 className="user-email">yuki@Maxwell.com</h6>
+                                        <h5 className="user-name">{fname}</h5>
+                                        <h6 className="user-email">{email}</h6>
                                     </div>
                                     <div className="about">
+                                        <label for='imageUpload' class='button'>
+                                            <span class=''>Upload</span>
+                                        </label>
+                                        <input
+                                            type='file'
+                                            id='imageUpload'
+                                            style={{ display: 'none' }}
+                                            onChange={(e) => {
+                                                handleImageChange(e);
+                                            }}
+                                        />
                                         <h5>About</h5>
                                         <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
                                     </div>
@@ -96,6 +141,7 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 border">
                         <div className="card h-100">
                             <div className="card-body">
